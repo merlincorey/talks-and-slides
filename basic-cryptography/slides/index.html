@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Basic Cryptography with Merlin Corey</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+	<section>
+	  <section>
+	    <h2>Basic Cryptography</h2>
+	    <p>Cryptography, basically.</p>
+	  </section>
+	  <section data-background="img/hackers-zero-cool.gif">
+	  </section>
+	</section>
+
+	<section>
+	  <section>
+	    <h2>Glossary of Terms</h2>
+	  </section>
+	  <section>
+	    <dl>
+	      <dt>Cryptography</dt>
+	      <dd>The practice and study of techniques for secure communication in the presence of adversaries</dd>
+	      <dt>Cryptanalysis</dt>
+	      <dd>The study of analyzing information systems in order to study the hidden aspects of the systems</dd>
+	      <dt>Steganography</dt>
+	      <dd>The practice of concealing a file, message, image, or video within another file, message, image, or video.</dd>
+	    </dl>
+	  </section>
+	  <section>
+	    <dl>
+	      <dt>Transposition Cipher</dt>
+	      <dd>Cipher which rearranges the letters through some method</dd>
+	      <dt>Substitution Cipher</dt>
+	      <dd>Cipher which replaces letters with other letters</dd>
+	      <dt>Code</dt>
+	      <dd>Replacement of a unit of text with another unit of text</dd>
+	    </dl>
+	  </section>
+	  <section>
+	    <dl>
+	      <dt>Block Cipher</dt>
+	      <dd>Cipher which uses blocks of text and an algorithm to encrypt text</dd>
+	      <dt>Hash Function</dt>
+	      <dd>Algorithm to convert text to a very large unique number</dd>
+	      <dt>One Time Pad</dt>
+	      <dd>Method of encryption that uses a key as long as the message, typically</dd>
+	    </dl>
+	  </section>	  
+	  <section data-background="img/michael-scott-wink.gif">
+	  </section>
+	</section>
+
+	<section>
+	  <section>
+	    <h2>Historical Fables</h2>
+	    <aside class="notes">
+	      <ul>
+		<li>Hidden messages within a wax tablet: in ancient Greece, people wrote messages on wood and covered it with wax that bore an innocent covering message.</li>
+		<li>Hidden messages on messenger's body were also used in ancient Greece. Herodotus tells the story of a message tattooed on the shaved head of a slave of Histiaeus, hidden by the hair that afterwards grew over it, and exposed by shaving the head. The message allegedly carried a warning to Greece about Persian invasion plans. The method has obvious drawbacks, such as delayed transmission while waiting for the slave's hair to grow and restrictions on the number and the size of messages that can be encoded on one person's scalp.</li>
+		<li>Hidden messages on paper written in secret inks, under other messages or on the blank parts of other messages</li>
+		<li>Messages written in Morse code on yarn and then knitted into a piece of clothing worn by a courier.</li>
+		<li>Messages written on envelopes in the area covered by postage stamps.</li>
+		In the early days of the printing press, it was common to mix different typefaces on a printed page because the printer did not have enough copies of some letters in one typeface. Thus, a message could be hidden by using two or more different typefaces, such as normal or italic.
+	      <li>During both world wars, female spies used knitted codes so new knitted patterns were banned during both wars.[5]</li>
+	      <li>During and after World War II, espionage agents used photographically-produced microdots to send information back and forth. Microdots were typically minute (less than the size of the period produced by a typewriter). World War II microdots were embedded in the paper and covered with an adhesive, such as collodion. That was reflective and so was detectable by viewing against glancing light. Alternative techniques included inserting microdots into slits cut into the edge of postcards.</li>
+	      <li>During World War II, Velvalee Dickinson, a spy for Japan in New York City, sent information to accommodation addresses in neutral South America. She was a dealer in dolls, and her letters discussed the quantity and type of doll to ship. The stegotext was the doll orders, and the concealed "plaintext" was itself encoded and gave information about ship movements, etc. Her case became somewhat famous and she became known as the Doll Woman.</li>
+	      <li>During World War II, photosensitive glass was declared secret, and used for transmitting information to Allied armies.</li>
+	      <li>Jeremiah Denton repeatedly blinked his eyes in Morse code during the 1966 televised press conference that he was forced into as an American prisoner-of-war by his North Vietnamese captors, spelling out "T-O-R-T-U-R-E". That confirmed for the first time to the US Naval Intelligence and other Americans that the North Vietnamese were torturing American prisoners-of-war.</li>
+		<li>In 1968, crew members of the USS Pueblo intelligence ship, held as prisoners by North Korea, communicated in sign language during staged photo opportunities, to inform the United States that they were not defectors but captives of the North Koreans. In other photos presented to the US, crew members gave "the finger" to the unsuspecting North Koreans, in an attempt to discredit photos that showed them smiling and comfortable.</li>
+	    </aside>
+	  </section>
+	  <section data-background="img/skytale.png">
+	  </section>
+	  <section>
+	    <img src="img/cipher-machine-book.jpg" alt="Cipher Machine Book">
+	    <aside class="notes">
+	      <p>The main classical cipher types are transposition ciphers, which rearrange the order of letters in a message (e.g., 'hello world' becomes 'ehlol owrdl' in a trivially simple rearrangement scheme), and substitution ciphers, which systematically replace letters or groups of letters with other letters or groups of letters (e.g., 'fly at once' becomes 'gmz bu podf' by replacing each letter with the one following it in the Latin alphabet). Simple versions of either have never offered much confidentiality from enterprising opponents. An early substitution cipher was the Caesar cipher, in which each letter in the plaintext was replaced by a letter some fixed number of positions further down the alphabet. Suetonius reports that Julius Caesar used it with a shift of three to communicate with his generals. Atbash is an example of an early Hebrew cipher. The earliest known use of cryptography is some carved ciphertext on stone in Egypt (ca 1900 BCE), but this may have been done for the amusement of literate observers rather than as a way of concealing information.</p>
+	      <p>The Greeks of Classical times are said to have known of ciphers (e.g., the scytale transposition cipher claimed to have been used by the Spartan military).[17] Steganography (i.e., hiding even the existence of a message so as to keep it confidential) was also first developed in ancient times. An early example, from Herodotus, was a message tattooed on a slave's shaved head and concealed under the regrown hair.[11] More modern examples of steganography include the use of invisible ink, microdots, and digital watermarks to conceal information.</p>
+	      <p>In India, the 2000-year-old Kamasutra of Vātsyāyana speaks of two different kinds of ciphers called Kautiliyam and Mulavediya. In the Kautiliyam, the cipher letter substitutions are based on phonetic relations, such as vowels becoming consonants. In the Mulavediya, the cipher alphabet consists of pairing letters and using the reciprocal ones.[11]</p>
+	      <p>In Sassanid Persia, there were two secret scripts, according to the Muslim author Ibn al-Nadim: the šāh-dabīrīya (literally "King's script") which was used for official correspondence, and the rāz-saharīya which was used to communicate secret messages with other countries.[18]</p>
+	      <p>Ciphertexts produced by a classical cipher (and some modern ciphers) will reveal statistical information about the plaintext, and that information can often be used to break the cipher. After the discovery of frequency analysis, perhaps by the Arab mathematician and polymath Al-Kindi (also known as Alkindus) in the 9th century,[19] nearly all such ciphers could be broken by an informed attacker. Such classical ciphers still enjoy popularity today, though mostly as puzzles (see cryptogram). Al-Kindi wrote a book on cryptography entitled Risalah fi Istikhraj al-Mu'amma (Manuscript for the Deciphering Cryptographic Messages), which described the first known use of frequency analysis cryptanalysis techniques.[19][20]</p>
+
+	      <p>Language letter frequencies may offer little help for some extended historical encryption techniques such as homophonic cipher that tend to flatten the frequency distribution. For those ciphers, language letter group (or n-gram) frequencies may provide an attack.</p>
+	      <p>Essentially all ciphers remained vulnerable to cryptanalysis using the frequency analysis technique until the development of the polyalphabetic cipher, most clearly by Leon Battista Alberti around the year 1467, though there is some indication that it was already known to Al-Kindi.[20] Alberti's innovation was to use different ciphers (i.e., substitution alphabets) for various parts of a message (perhaps for each successive plaintext letter at the limit). He also invented what was probably the first automatic cipher device, a wheel which implemented a partial realization of his invention. In the polyalphabetic Vigenère cipher, encryption uses a key word, which controls letter substitution depending on which letter of the key word is used. In the mid-19th century Charles Babbage showed that the Vigenère cipher was vulnerable to Kasiski examination, but this was first published about ten years later by Friedrich Kasiski.[21]</p>
+	      <p>Although frequency analysis can be a powerful and general technique against many ciphers, encryption has still often been effective in practice, as many a would-be cryptanalyst was unaware of the technique. Breaking a message without using frequency analysis essentially required knowledge of the cipher used and perhaps of the key involved, thus making espionage, bribery, burglary, defection, etc., more attractive approaches to the cryptanalytically uninformed. It was finally explicitly recognized in the 19th century that secrecy of a cipher's algorithm is not a sensible nor practical safeguard of message security; in fact, it was further realized that any adequate cryptographic scheme (including ciphers) should remain secure even if the adversary fully understands the cipher algorithm itself. Security of the key used should alone be sufficient for a good cipher to maintain confidentiality under an attack. This fundamental principle was first explicitly stated in 1883 by Auguste Kerckhoffs and is generally called Kerckhoffs's Principle; alternatively and more bluntly, it was restated by Claude Shannon, the inventor of information theory and the fundamentals of theoretical cryptography, as Shannon's Maxim—'the enemy knows the system'.</p>
+	      <p>Different physical devices and aids have been used to assist with ciphers. One of the earliest may have been the scytale of ancient Greece, a rod supposedly used by the Spartans as an aid for a transposition cipher (see image above). In medieval times, other aids were invented such as the cipher grille, which was also used for a kind of steganography. With the invention of polyalphabetic ciphers came more sophisticated aids such as Alberti's own cipher disk, Johannes Trithemius' tabula recta scheme, and Thomas Jefferson's wheel cypher (not publicly known, and reinvented independently by Bazeries around 1900). Many mechanical encryption/decryption devices were invented early in the 20th century, and several patented, among them rotor machines—famously including the Enigma machine used by the German government and military from the late 1920s and during World War II.[22] The ciphers implemented by better quality examples of these machine designs brought about a substantial increase in cryptanalytic difficulty after WWI.[23]</p>
+	    </aside>
+	  </section>
+	  <section>
+	    <img src="img/gold-bug.jpg" alt="Gold Bug">
+	    <aside class="notes">
+	      Legrand explains that on the day he found the bug on the mainland coastline, Jupiter had picked up a scrap piece of parchment to wrap it up. Legrand kept the scrap and used it to sketch the bug for the narrator; in so doing, though, he noticed traces of invisible ink, revealed by the heat of the fire burning on the hearth. The parchment proved to contain a cryptogram, which Legrand deciphered as a set of directions for finding a treasure buried by the infamous pirate Captain Kidd. The final step involved dropping a slug or weight through the left eye of the skull in the tree; their first dig failed because Jupiter mistakenly dropped it through the right eye instead. Legrand muses that the skeletons may be the remains of two members of Kidd's crew, who buried the chest and were then killed to silence them
+	    </aside>
+	  </section>
+	  <section>
+	    <pre>
+	      53‡‡†305))6*;4826)4‡.)4‡);806*;48†8
+	      ¶60))85;;]8*;:‡*8†83(88)5*†;46(;88*96
+	      *?;8)*‡(;485);5*†2:*‡(;4956*2(5*—4)8
+	      ¶8*;4069285);)6†8)4‡‡;1(‡9;48081;8:8‡
+	      1;48†85;4)485†528806*81(‡9;48;(88;4
+	      (‡?34;48)4‡;161;:188;‡?;
+	    </pre>
+	  </section>
+	  <section>
+	    53‡‡†305))6*;4826)4‡.)4‡);806*;48†8
+	    agoodglassinthebishopshostelinthede
+
+	    ¶60))85;;]8*;:‡*8†83(88)5*†;46(;88*96
+	    vilsseattwentyonedegreesandthirteenmi
+
+	    *?;8)*‡(;485);5*†2:*‡(;4956*2(5*—4)8
+	    nutesnortheastandbynorthmainbranchse
+
+	    ¶8*;4069285);)6†8)4‡‡;1(‡9;48081;8:8‡
+	    venthlimbeastsideshootfromthelefteyeo
+
+	    1;48†85;4)485†528806*81(‡9;48;(88;4
+	    fthedeathsheadabeelinefromthetreeth
+
+	    (‡?34;48)4‡;161;:188;‡?;
+	    roughtheshotfiftyfeetout
+	  </section>
+	  <section data-background="img/picard-facepalm.gif">
+	  </section>
+	</section>
+
+	<section>
+	  <section>
+	    <h2>Diffie Hellman Painting</h2>
+	  </section>
+	  <section data-background="img/visual-cryptography.gif">
+	  </section>
+	  <section data-background="img/diffie-and-hellman.jpg">
+	  </section>
+	  <section>
+	    <img src="img/diffie-hellman-key-exchange-paint.jpg">
+	    <aside class="notes">
+	      <p>Diffie–Hellman key exchange (DH)[nb 1] is a method of securely exchanging cryptographic keys over a public channel and was one of the first public-key protocols as originally conceptualized by Ralph Merkle and named after Whitfield Diffie and Martin Hellman.[1][2] DH is one of the earliest practical examples of public key exchange implemented within the field of cryptography.</p>
+	      <p>Traditionally, secure encrypted communication between two parties required that they first exchange keys by some secure physical channel, such as paper key lists transported by a trusted courier. The Diffie–Hellman key exchange method allows two parties that have no prior knowledge of each other to jointly establish a shared secret key over an insecure channel. This key can then be used to encrypt subsequent communications using a symmetric key cipher.</p>
+	      <p>Diffie–Hellman is used to secure a variety of Internet services. However, research published in October 2015 suggests that the parameters in use for many DH Internet applications at that time are not strong enough to prevent compromise by very well-funded attackers, such as the security services of large governments.[3]</p>
+	    </aside>
+	  </section>
+	  <section>
+	    <img src="img/diffie-hellman-key-exchange-numbers.png">
+	  </section>
+	</section>
+
+	<section>
+	  <section>
+	    <h2>Public Key Cryptography</h2>
+	    <aside class="notes">
+	      <p>Public key cryptography, or asymmetrical cryptography, is any cryptographic system that uses pairs of keys: public keys which may be disseminated widely, and private keys which are known only to the owner. This accomplishes two functions: authentication, where the public key verifies a holder of the paired private key sent the message, and encryption, where only the paired private key holder can decrypt the message encrypted with the public key.</p>
+	      <p>In a public key encryption system, any person can encrypt a message using the receiver's public key. That encrypted message can only be decrypted with the receiver's private key. To be practical, the generation of a public and private key -pair must be computationally economical. The strength of a public key cryptography system relies on the computational effort (work factor in cryptography) required to find the private key from its paired public key. If so, effective security only requires keeping the private key private; the public key can be openly distributed without compromising security.[1]</p>
+	      <p>Public key cryptography systems often rely on cryptographic algorithms based on mathematical problems that currently admit no efficient solution — particularly those inherent in certain integer factorization, discrete logarithm, and elliptic curve relationships. Public key algorithms, unlike symmetric key algorithms, do not require a secure channel for the initial exchange of one (or more) secret keys between the parties.[2]</p>
+	      <p>Because of the computational complexity of asymmetric encryption, it is usually used only for small blocks of data, typically the transfer of a symmetric encryption key (e.g. a session key). This symmetric key is then used to encrypt the rest of the potentially long message sequence. The symmetric encryption/decryption is based on simpler algorithms and is much faster.[3]</p>
+	      <p>PasswordStore, GPG, SSH keys (used by SSH, git, etc)</p>
+	    </aside>
+	  </section>
+	  <section data-background="img/sneakers-glasses.gif">
+	  </section>
+	</section>
+
+	<section>
+	  <section>
+	    <h2>Cryptocurrency</h2>
+	    <aside class="notes">
+	      <p>Crypto currencies are public key cryptography + hashing, generally.</p>
+	      <p>Preimage resistance is about the most basic property of a hash function which can be thought. It means:</p>
+	      <p>For a given h in the output space of the hash function, it is hard to find any message x with H(x)=h</p>
+	      <p>A related property is the second preimage resistance:</p>
+	      <p>For a given message x1</p>
+	      <p>it is hard to find a second message x2≠x1 with H(x1)=H(x2).</p>
+	      <p>Discussion of public ledger vs private transactions on something like zcash or monero.</p>
+	    </aside>
+	  </section>
+	  <section data-background="img/pile-of-bitcoins.jpg">
+	  </section>
+	  <section>
+	    <img src="img/monero-poster.png" alt="Monero Poster" />
+	  </section>
+	</section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+      dependencies: [
+        { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'plugin/search/search.js', async: true },
+        { src: 'plugin/zoom-js/zoom.js', async: true },
+        { src: 'plugin/notes/notes.js', async: true }
+      ]
+      });
+    </script>
+  </body>
+</html>

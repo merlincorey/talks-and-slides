@@ -1,0 +1,49 @@
+* Basic Cryptography
+** Intended Audience
+
+   Newbies and Novices alike will delight, but there's some fun facts and activities to interest the Nerds.
+
+** Topics
+*** Introduction
+    #+CAPTION: Shot from the movie Hackers
+    [[file:slides/img/hackers-zero-cool.gif]]
+*** Glossary of Terms
+
+    - Cryptography :: 
+    - Cryptanalysis :: 
+
+    #+CAPTION: Michael Scott ready for business
+    [[file:slides/img/michael-scott-wink.gif]]
+
+*** Historical Fables
+    #+CAPTION: Average commander after a cryptography fail
+    [[file:slides/img/picard-facepalm.gif]]
+*** Diffie-Hellman Painting
+    #+CAPTION: Visual Cryptography
+    [[file:slides/img/visual-cryptography.gif]]
+    
+    #+CAPTION: Diffie and Hellman in 2015
+    [[file:slides/img/diffie-and-hellman.jpg]]
+*** Public Key Cryptography
+    #+CAPTION: Shot from the movie Sneakers
+    [[file:slides/img/sneakers-glasses.gif]]
+*** Cryptocurrency
+    #+CAPTION: Pile of Bitcoins
+    [[file:slides/img/pile-of-bitcoins.jpg]]
+    
+    #+CAPTION: Monero Movie Poster
+    [[file:slides/img/monero-poster.png]]
+
+* Venues
+
+  | Date and Time                 | Venue                         |
+  |-------------------------------+-------------------------------|
+  | 2018 January 27 11:00 - 12:00 | [[http://www.sparklecon.org/][Sparklecon 5 : Stages Theatre]] |
+
+** [[http://www.sparklecon.org/][Sparklecon]]
+*** Sparklecon 5 :2018:
+
+    At the =Stages Theatre= with a projector and...
+* References
+** [[https://news.bitcoin.com/diffie-hellman-2015-turing-award/][Diffie & Hellman Receive the 2015 Turing Award]] :2015:
+** [[https://www.quora.com/What-are-some-movie-TV-shows-scenes-that-can-be-used-in-a-presentation-of-cryptography][What are some movie/TV shows scenes that can be used in a presentation of cryptography?]] :2016:
